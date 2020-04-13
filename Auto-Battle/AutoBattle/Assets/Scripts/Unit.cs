@@ -8,7 +8,7 @@ public class Unit : MonoBehaviour
     const float pathUpdateMoveThreshold = 0.5f;
     const float minPathUpdateTime = 0.2f;
     protected Transform target;
-    public float speed = 10f;
+    protected float speed = 0f;
     public float turnDst = 5;
     public float turnSpeed = 3;
     public float stoppingDst = 10;
@@ -23,11 +23,10 @@ public class Unit : MonoBehaviour
 
     public void OnPathFound(Vector3[] newPath, bool pathSuccess)
     {
-        if (pathSuccess)
+        if (pathSuccess && transform!=null)
         {
              //path = newPath;
-            if(transform!=null)
-                path = new Path(newPath,transform.position,turnDst, stoppingDst);
+            path = new Path(newPath,transform.position,turnDst, stoppingDst);
             StopCoroutine("followPath");
             StartCoroutine("followPath");
         }

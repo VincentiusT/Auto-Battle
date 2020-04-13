@@ -7,6 +7,7 @@ public class Player : Unit
     public Identity playerIdentity;
     public Transform mainTarget;
     public LayerMask enemyMask;
+    public LayerMask unwalkableMask;
     
     private Collider[] enemies;
     private GameObject child;
@@ -19,6 +20,7 @@ public class Player : Unit
     private float radius = 6f;
     private float attackDamage;
     private float nextAttackTime;
+    private bool done;
 
     private HealthBar healthBar;
 
@@ -38,14 +40,11 @@ public class Player : Unit
         target = mainTarget;
 
         healthBar.setMaxHealth((int)health);
+      
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(updatePath());
-        }
         
         enemies = checkEnemyInRadius(radius);
 
@@ -85,9 +84,9 @@ public class Player : Unit
 
     private void attack(GameObject enemy)
     {
-        speed = 0;
         if(enemy != null)
         {
+            speed = 0;
             enemy.GetComponent<Enemy>().subtractHealth(attackDamage);
         }
     }
@@ -101,6 +100,11 @@ public class Player : Unit
     void dead()
     {
         Destroy(gameObject);
+    }
+
+    public void spawnThisPlayer()
+    {
+        StartCoroutine(updatePath());
     }
 
     private void OnDrawGizmos()

@@ -38,13 +38,14 @@ public class Enemy : Unit
         target = mainTarget;
 
         healthBar.setMaxHealth((int)health);
+
+        StartCoroutine(updatePath());
     }
     
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(updatePath());
         }
 
         players = checkPlayerInRadius(radius);
@@ -90,7 +91,8 @@ public class Enemy : Unit
     public void subtractHealth(float damage)
     {
         health -= damage;
-        healthBar.setHealth((int)health);
+        if(healthBar!=null)
+            healthBar.setHealth((int)health);
     }
 
     private Collider[] checkPlayerInRadius(float _radius)

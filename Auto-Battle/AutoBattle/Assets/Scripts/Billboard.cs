@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class Billboard : MonoBehaviour
 {
-    public Transform cam;
     public Transform anchor;
-    private Vector3 offset = new Vector3(0, 0, 2);
+    private Transform cam;
+    private Vector3 offset = new Vector3(0, 0, 1.5f);
+
+    private void Awake()
+    {
+        cam = Camera.main.transform;
+    }
 
     private void Update()
     {
